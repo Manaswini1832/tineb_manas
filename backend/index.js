@@ -51,6 +51,20 @@ app.get('/representatives', async (req, res) => {
     res.status(200).send(representatives);
 });
 
+app.get('/representatives/:id', async(req, res) => {
+    const repID = req.params.id;
+    const data = await readJson();
+
+    if(repID === undefined){
+        res.status(404).send("No such representative")
+    }
+
+    const representatives = data
+        .filter(entry => entry["Sl.No."] === repID)
+
+    res.status(200).send(representatives);
+})
+
 app.listen(PORT, () => {
     console.log("Hello World! Listening at " + PORT)
 })
