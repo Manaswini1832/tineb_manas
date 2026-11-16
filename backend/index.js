@@ -21,6 +21,22 @@ app.get('/states', async(req, res) => {
     res.status(200).send(states)
 })
 
+app.get('/constituencies', async (req, res) => {
+    const state = req.query.state;
+    const data = await readJson();
+
+    if (state === undefined) {
+        const constituencies = data.map(entry => entry.Constituency);
+        return res.status(200).send(constituencies);
+    }
+
+    const constituencies = data
+        .filter(entry => entry.State.toLowerCase() === state.toLowerCase())
+        .map(entry => entry.Constituency);
+
+    res.status(200).send(constituencies);
+});
+
 app.listen(PORT, () => {
     console.log("Hello World! Listening at " + PORT)
 })
