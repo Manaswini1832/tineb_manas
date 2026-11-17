@@ -47,8 +47,69 @@ async function readJson(filter) {
 }
 
 
+//get all states and constituencies to populate frontend form selection
+async function getStates() {
+    try {
+        const assessmentData = await fetch('./parsed_assessment_data.json');
+        const assessmentJson = await assessmentData.json();
+
+        const selectElement = document.getElementById('stateSelect');
+
+        const states = [...new Set(assessmentJson.map(rep => rep.State))];
+
+        states.forEach(state => {
+            const stateOption = new Option(state, state);
+            selectElement.add(stateOption);
+        });
+
+    } catch (error) {
+        console.error('Error loading JSON:', error);
+    }
+}
+
+async function getConstituencies(state) {
+    try {
+        const assessmentData = await fetch('./parsed_assessment_data.json');
+        const assessmentJson = await assessmentData.json();
+
+        const selectElement = document.getElementById('constituencySelect');
+        selectElement.innerHTML = ""
+
+        const constituencies = [...new Set(assessmentJson.map(rep => {
+            if(rep.State === state){
+                return rep.Constituency
+            }
+        }))];
+
+        constituencies.forEach(constituency => {
+            const constituencyOption = new Option(constituency, constituency);
+            selectElement.add(constituencyOption);
+        });
+
+    } catch (error) {
+        console.error('Error loading JSON:', error);
+    }
+}
+
+function searchRepresentative() {
+    const state = document.getElementById('stateSelect').value;
+    const constituency = document.getElementById('constituencySelect').value;
+
+    readJson({ state, constituency });
+}
+
+
 //start
-readJson({
-    state : "Tamil Nadu",
-    constituency : "Vellore"
+getStates()
+
+const stateSelect = document.getElementById('stateSelect');
+const constituencySelect = document.getElementById('constituencySelect');
+
+stateSelect.addEventListener('change', () => {
+    if (stateSelect.value !== "") {
+        constituencySelect.disabled = false;
+        getConstituencies(stateSelect.value)
+    } else {
+        constituencySelect.disabled = true;
+    }
 });

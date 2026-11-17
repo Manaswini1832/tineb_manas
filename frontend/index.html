@@ -7,9 +7,20 @@
   </head>
   <body>
     <h1>Know your representatives</h1>
-    <button onclick="readJson({ state: 'Andhra Pradesh', constituency: '' })">
-      Search
-    </button>
+    <form id="repForm">
+      <label for="stateSelect"></label>
+      <select id="stateSelect" name="State" required>
+        <option value="">State</option>
+      </select>
+
+      <label for="constituencySelect"></label>
+      <select id="constituencySelect" name="Constituency" disabled>
+        <option value="">Constituency</option>
+      </select>
+
+      <button type="button" onclick="searchRepresentative()">Search</button>
+    </form>
+
     <div id="members"></div>
 
     <script src="index.js"></script>
