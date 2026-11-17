@@ -18,19 +18,20 @@ async function readJson(filter) {
             if(rep.State === filter.state){
                 if(filter.constituency === "" || rep.Constituency === filter.constituency){
                     const div = document.createElement('div');
+                    div.className = "representative-card";
 
-                    const repName = document.createElement("h1")
+                    const repName = document.createElement("h2")
                     repName.textContent = `${rep.Name}`
                     
-                    const repDetailsList = document.createElement("ul")
+                    const repDetailsList = document.createElement("div")
                     repDetailsList.innerHTML = `
-                        <li>${rep.Party}</li>
-                        <li>${rep.Constituency}</li>
-                        <li>${rep.State}</li>
-                        <li>${rep.Status}</li>
-                        <li>${rep["Lok Sabha Terms"]}</li>
-                        <li>${rep.Phone}</li>
-                        <li>${rep.Email}</li>
+                        <p>Party : ${rep.Party}</p><br>
+                        <p>Constituency : ${rep.Constituency}</p><br>
+                        <p>State : ${rep.State}</p><br>
+                        <p>Status : ${rep.Status}</p><br>
+                        <p>Lok Sabha Terms : ${rep["Lok Sabha Terms"]}</p><br>
+                        <p>Phone : ${rep.Phone === '-' ? "Unavailable" : rep.Phone}</p><br>
+                        <p>Email : ${rep.Email}</p><br>
                     `;
                 
                     div.appendChild(repName)

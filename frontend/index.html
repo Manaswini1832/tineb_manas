@@ -4,22 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tineb Manas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
-    <h1>Know your representatives</h1>
-    <form id="repForm">
-      <label for="stateSelect"></label>
-      <select id="stateSelect" name="State" required>
-        <option value="">State</option>
-      </select>
+  <body class="website-container">
+    <div class="repFormDiv">
+      <h1>Know your representatives</h1>
+      <form id="repForm">
+        <label for="stateSelect"></label>
+        <select id="stateSelect" name="State" required>
+          <option value="">State</option>
+        </select>
 
-      <label for="constituencySelect"></label>
-      <select id="constituencySelect" name="Constituency" disabled>
-        <option value="">Constituency</option>
-      </select>
+        <label for="constituencySelect"></label>
+        <select id="constituencySelect" name="Constituency" disabled>
+          <option value="">Constituency</option>
+        </select>
 
-      <button type="button" onclick="searchRepresentative()">Search</button>
-    </form>
+        <button type="button" onclick="searchRepresentative()">Search</button>
+      </form>
+    </div>
 
     <div id="members"></div>
 
