@@ -20,19 +20,32 @@ async function readJson(filter) {
                     const div = document.createElement('div');
                     div.className = "representative-card";
 
-                    const repName = document.createElement("h2")
+                    const repName = document.createElement("h3")
                     repName.textContent = `${rep.Name}`
+
+                    const emailArray = rep.Email.split(",").map(e => e.trim());
+                    const emailHTML = emailArray.map(email =>
+                        `<a href="mailto:${email}">${email}</a>
+                         <button onclick="navigator.clipboard.writeText('${email}').then(() => {
+                            this.textContent = 'Copied!';
+                            setTimeout(() => this.textContent = 'Copy', 1500);
+                        })" class = "copyBtn">Copy</button>
+                        </p>`
+                    ).join("");
                     
                     const repDetailsList = document.createElement("div")
                     repDetailsList.innerHTML = `
-                        <p>Party : ${rep.Party}</p><br>
-                        <p>Constituency : ${rep.Constituency}</p><br>
-                        <p>State : ${rep.State}</p><br>
-                        <p>Status : ${rep.Status}</p><br>
-                        <p>Lok Sabha Terms : ${rep["Lok Sabha Terms"]}</p><br>
-                        <p>Phone : ${rep.Phone === '-' ? "Unavailable" : rep.Phone}</p><br>
-                        <p>Email : ${rep.Email}</p><br>
+                        <p><strong>Party</strong> : ${rep.Party}</p>
+                        <p><strong>Constituency</strong> : ${rep.Constituency}</p>
+                        <p><strong>State</strong> : ${rep.State}</p>
+                        <p><strong>Status</strong> : ${rep.Status}</p>
+                        <p><strong>Lok Sabha Terms</strong> : ${rep["Lok Sabha Terms"]}</p>
+                        <p><strong>Phone</strong> : ${rep.Phone === '-' ? "Unavailable" : rep.Phone}</p>
+                        <p><strong>Emails</strong> : </p>
+                        ${emailHTML}
                     `;
+
+
                 
                     div.appendChild(repName)
                     div.appendChild(repDetailsList)
