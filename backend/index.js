@@ -41,12 +41,26 @@ app.get('/representatives', async (req, res) => {
     const state = req.query.state;
     const data = await readJson();
 
-    if (state === undefined) {
-        res.status(200).send(data)
+    let representatives = data;
+
+    if (state !== undefined) {
+        representatives = data.filter(
+            entry => entry.State.toLowerCase() === state.toLowerCase()
+        );
     }
 
-    const representatives = data
-        .filter(entry => entry.State.toLowerCase() === state.toLowerCase())
+    representatives = representatives.map(entry => ({
+        ...entry,
+
+        //since lst and emails to be returned as arrays
+        "Lok Sabha Terms": entry["Lok Sabha Terms"]
+            .split(",")
+            .map(term => term.trim()),
+
+        "Email": entry.Email
+            .split(",")
+            .map(email => email.trim())
+    }));
 
     res.status(200).send(representatives);
 });
@@ -59,8 +73,21 @@ app.get('/representatives/:id', async(req, res) => {
         res.status(404).send("No such representative")
     }
 
-    const representatives = data
+    let representatives = data
         .filter(entry => entry["Sl.No."] === repID)
+
+    representatives = representatives.map(entry => ({
+        ...entry,
+
+        //since lst and emails to be returned as arrays
+        "Lok Sabha Terms": entry["Lok Sabha Terms"]
+            .split(",")
+            .map(term => term.trim()),
+
+        "Email": entry.Email
+            .split(",")
+            .map(email => email.trim())
+    }));
 
     res.status(200).send(representatives);
 })
