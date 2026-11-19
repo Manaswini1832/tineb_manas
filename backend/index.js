@@ -57,6 +57,8 @@ app.get('/representatives', async (req, res) => {
             .split(",")
             .map(term => term.trim()),
 
+        "Phone" : entry.Phone === "-" ? null : entry.Phone,
+
         "Email": entry.Email
             .split(",")
             .map(email => email.trim())
@@ -83,6 +85,8 @@ app.get('/representatives/:id', async(req, res) => {
         "Lok Sabha Terms": entry["Lok Sabha Terms"]
             .split(",")
             .map(term => term.trim()),
+
+        "Phone" : entry.Phone === "-" ? null : entry.Phone,
 
         "Email": entry.Email
             .split(",")
