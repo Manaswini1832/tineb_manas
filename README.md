@@ -11,6 +11,12 @@ Run code using VSCode Live Server
 ```
 
 ## Backend
+- Go to the /backend directory
+- Install the npm packages by running
+```
+npm install
+```
+- Run the following command. Express server starts up on port 5000
 
 ```
 npm run start
