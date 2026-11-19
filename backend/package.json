@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startDev" : "nodemon index.js"
+    "startDev": "nodemon index.js"
   },
   "keywords": [],
   "type": "commonjs",
   "dependencies": {
     "express": "^5.3.0",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
   }
 }
