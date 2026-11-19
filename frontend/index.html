@@ -26,6 +26,15 @@
           <option value="">Constituency</option>
         </select>
 
+        <input
+          id="repSearchInput"
+          type="text"
+          value=""
+          maxlength="30"
+          oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+          placeholder="Search representative by name"
+        />
+
         <button type="button" onclick="searchRepresentative()">Search</button>
       </form>
     </div>

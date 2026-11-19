@@ -4,6 +4,7 @@ async function readJson(filter) {
     filter = {
         state
         constituency
+        representative
     }
     */
 
@@ -15,45 +16,58 @@ async function readJson(filter) {
         container.innerHTML = ""
 
         assessmentJson.forEach(rep => {
-            if(rep.State === filter.state){
-                if(filter.constituency === "" || rep.Constituency === filter.constituency){
-                    const div = document.createElement('div');
-                    div.className = "representative-card";
+           //show entries with an intersection of all criteria
+            const nameMatch =
+                filter.representative === "" ||
+                rep.Name.toLowerCase().includes(filter.representative.toLowerCase());
 
-                    const repName = document.createElement("h3")
-                    repName.textContent = `${rep.Name}`
+            const stateMatch =
+                filter.state === "" ||
+                rep.State === filter.state;
 
-                    const emailArray = rep.Email.split(",").map(e => e.trim());
-                    const emailHTML = emailArray.map(email =>
-                        `<a href="mailto:${email}">${email}</a>
-                         <button onclick="navigator.clipboard.writeText('${email}').then(() => {
-                            this.textContent = 'Copied!';
-                            setTimeout(() => this.textContent = 'Copy', 1500);
-                        })" class = "copyBtn">Copy</button>
-                        </p>`
-                    ).join("");
-                    
-                    const repDetailsList = document.createElement("div")
-                    repDetailsList.innerHTML = `
-                        <p><strong>Party</strong> : ${rep.Party}</p>
-                        <p><strong>Constituency</strong> : ${rep.Constituency}</p>
-                        <p><strong>State</strong> : ${rep.State}</p>
-                        <p><strong>Status</strong> : ${rep.Status}</p>
-                        <p><strong>Lok Sabha Terms</strong> : ${rep["Lok Sabha Terms"]}</p>
-                        <p><strong>Phone</strong> : ${rep.Phone === '-' ? "Unavailable" : rep.Phone}</p>
-                        <p><strong>Emails</strong> : </p>
-                        ${emailHTML}
-                    `;
+            const constituencyMatch =
+                filter.constituency === "" ||
+                rep.Constituency === filter.constituency;
 
+            const show = nameMatch && stateMatch && constituencyMatch;
 
+            if(show){
+                const div = document.createElement('div');
+                div.className = "representative-card";
+
+                const repName = document.createElement("h3")
+                repName.textContent = `${rep.Name}`
+
+                const emailArray = rep.Email.split(",").map(e => e.trim());
+                const emailHTML = emailArray.map(email =>
+                    `<a href="mailto:${email}">${email}</a>
+                    <button onclick="navigator.clipboard.writeText('${email}').then(() => {
+                        this.textContent = 'Copied!';
+                        setTimeout(() => this.textContent = 'Copy', 1500);
+                    })" class = "copyBtn">Copy</button>
+                    </p>`
+                ).join("");
                 
-                    div.appendChild(repName)
-                    div.appendChild(repDetailsList)
+                const repDetailsList = document.createElement("div")
+                repDetailsList.innerHTML = `
+                    <p><strong>Party</strong> : ${rep.Party}</p>
+                    <p><strong>Constituency</strong> : ${rep.Constituency}</p>
+                    <p><strong>State</strong> : ${rep.State}</p>
+                    <p><strong>Status</strong> : ${rep.Status}</p>
+                    <p><strong>Lok Sabha Terms</strong> : ${rep["Lok Sabha Terms"]}</p>
+                    <p><strong>Phone</strong> : ${rep.Phone === '-' ? "Unavailable" : rep.Phone}</p>
+                    <p><strong>Emails</strong> : </p>
+                    ${emailHTML}
+                `;
 
-                    container.appendChild(div);
-                }
+
+            
+                div.appendChild(repName)
+                div.appendChild(repDetailsList)
+
+                container.appendChild(div);
             }
-        });
+    });
 
     } catch (error) {
         console.error('Error loading JSON:', error);
@@ -89,11 +103,14 @@ async function getConstituencies(state) {
         const selectElement = document.getElementById('constituencySelect');
         selectElement.innerHTML = ""
 
-        const constituencies = [...new Set(assessmentJson.map(rep => {
-            if(rep.State === state){
-                return rep.Constituency
-            }
-        }))];
+        const constituencies = [...new Set(
+            assessmentJson
+                .filter(rep => rep.State === state)
+                .map(rep => rep.Constituency)
+        )];
+
+        // default option
+        selectElement.add(new Option("Constituency", ""));
 
         constituencies.forEach(constituency => {
             const constituencyOption = new Option(constituency, constituency);
@@ -107,9 +124,10 @@ async function getConstituencies(state) {
 
 function searchRepresentative() {
     const state = document.getElementById('stateSelect').value;
-    const constituency = document.getElementById('constituencySelect').value;
+    const constituency = document.getElementById('constituencySelect').value || "";
+    const representative = document.getElementById('repSearchInput').value || "";
 
-    readJson({ state, constituency });
+    readJson({ state, constituency, representative });
 }
 
 
