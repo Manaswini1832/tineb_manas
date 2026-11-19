@@ -89,12 +89,13 @@ app.get('/states', async(req, res) => {
     res.status(200).json(states)
 })
 
+
 /**
  * @swagger
  * /constituencies:
  *   get:
  *     summary: Get constituencies in a state
- *     description: Returns all constituencies belonging to the specified state
+ *     description: Returns all constituencies belonging to the specified state.
  *     tags:
  *       - Constituencies
  *     parameters:
@@ -103,19 +104,24 @@ app.get('/states', async(req, res) => {
  *         required: true
  *         schema:
  *           type: string
- *         description: Name of the state
+ *         description: Name of the state.
  *         example: Karnataka
  *     responses:
  *       200:
- *         description: Successfully retrieved constituencies
+ *         description: Successfully retrieved constituencies.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 type: string
+ *             example:
+ *               - Kolar (SC)
+ *               - Haveri
+ *               - Chamarajanagar (SC)
+ *               - Bagalkot
  *       400:
- *         description: Missing or invalid state parameter
+ *         description: Missing or invalid state parameter.
  */
 app.get('/constituencies', async (req, res) => {
     const state = req.query.state;
