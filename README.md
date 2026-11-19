@@ -11,7 +11,6 @@ Run code using VSCode Live Server
 ```
 
 ## Backend
-- http://localhost:5000/
 
 ```
 npm run start
