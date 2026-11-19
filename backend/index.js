@@ -18,7 +18,7 @@ async function readJson(){
 app.get('/states', async(req, res) => {
     const data = await readJson()
     const states = [...new Set(data.map(entry => entry.State))]
-    res.status(200).send(states)
+    res.status(200).json(states)
 })
 
 app.get('/constituencies', async (req, res) => {
@@ -34,7 +34,7 @@ app.get('/constituencies', async (req, res) => {
         .filter(entry => entry.State.toLowerCase() === state.toLowerCase())
         .map(entry => entry.Constituency);
 
-    res.status(200).send(constituencies);
+    res.status(200).json(constituencies);
 });
 
 app.get('/representatives', async (req, res) => {
@@ -64,7 +64,7 @@ app.get('/representatives', async (req, res) => {
             .map(email => email.trim())
     }));
 
-    res.status(200).send(representatives);
+    res.status(200).json(representatives);
 });
 
 app.get('/representatives/:id', async(req, res) => {
@@ -93,8 +93,19 @@ app.get('/representatives/:id', async(req, res) => {
             .map(email => email.trim())
     }));
 
-    res.status(200).send(representatives);
+    res.status(200).json(representatives);
 })
+
+app.get('/counts', async (req, res) => {
+    const reps = await readJson();
+
+    const countMap = new Map();
+    for (const rep of reps) {
+        countMap.set(rep.State, (countMap.get(rep.State) || 0) + 1);
+    }
+
+    res.status(200).json(Object.fromEntries(countMap));
+});
 
 app.listen(PORT, () => {
     console.log("Hello World! Listening at " + PORT)
