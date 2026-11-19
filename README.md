@@ -37,6 +37,7 @@ Following table shows how the state, constituency and representative filters wor
 | Empty | Empty | raj | List of all the representatives (irrespective of state) whose names contain the text "raj" |
 
 # API
+- Got to the /docs route to find the swagger documentation for the API
 
 ## Get states
 
