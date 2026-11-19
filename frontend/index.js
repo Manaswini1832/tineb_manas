@@ -29,7 +29,12 @@ async function readJson(filter) {
                 filter.constituency === "" ||
                 rep.Constituency === filter.constituency;
 
-            const show = nameMatch && stateMatch && constituencyMatch;
+            let show = false;
+            if(filter.representative === "" && filter.state === "" && filter.constituency === ""){
+                show = false
+            }else{
+                show = nameMatch && stateMatch && constituencyMatch;
+            }
 
             if(show){
                 const div = document.createElement('div');
