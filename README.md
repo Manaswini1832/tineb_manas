@@ -6,9 +6,7 @@
 
 ## Frontend
 
-```
-Run code using VSCode Live Server
-```
+- Run the code using VS Code Live Server or access it live on : [Live link](https://tinebmanas.netlify.app/)
 
 ## Backend
 
