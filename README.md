@@ -13,14 +13,14 @@ Run code using VSCode Live Server
 ## Backend
 
 ```
-npm run start
+npm run start  // http://localhost:5000/
 ```
 
 # How representatives are filtered
 
 Following table shows how the state, constituency and representative filters work on both the frontend and the backend.
 | State | Constituency | Representative | Response |
-| :--- | --- | --- | --- | --- |
+| :--- | --- | --- | --- | 
 | Empty | Empty | Empty | Empty |
 | Karnataka | Empty | Empty | List of all the representatives from Karnataka |
 | Karnataka | Bagalkot | Empty | Representative of Bagalkot from Karnataka |
