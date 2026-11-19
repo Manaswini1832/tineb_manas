@@ -25,9 +25,9 @@ app.get('/constituencies', async (req, res) => {
     const state = req.query.state;
     const data = await readJson();
 
-    if (state === undefined) {
-        const constituencies = data.map(entry => entry.Constituency);
-        return res.status(200).send(constituencies);
+    if (state === "" || state === undefined) {
+        //if no state, send 400 (according to doc)
+        return res.status(400).send("Improper or missing state");
     }
 
     const constituencies = data
