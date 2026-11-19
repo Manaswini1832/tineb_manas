@@ -11,11 +11,14 @@ Run code using VSCode Live Server
 ```
 
 ## Backend
+
 - Go to the /backend directory
 - Install the npm packages by running
+
 ```
 npm install
 ```
+
 - Run the following command. Express server starts up on port 5000
 
 ```
@@ -26,7 +29,7 @@ npm run start
 
 Following table shows how the state, constituency and representative filters work on both the frontend and the backend.
 | State | Constituency | Representative | Response |
-| :--- | --- | --- | --- | 
+| :--- | --- | --- | --- |
 | Empty | Empty | Empty | Empty |
 | Karnataka | Empty | Empty | List of all the representatives from Karnataka |
 | Karnataka | Bagalkot | Empty | Representative of Bagalkot from Karnataka |
@@ -39,23 +42,23 @@ Following table shows how the state, constituency and representative filters wor
 
 ## Get states
 
-![Get states response](response_get_states.png)
+![Get states response](imgs/response_get_states.png)
 
 ## Get constituencies
 
-![Get states response](response_get_constituencies.png)
+![Get states response](imgs/response_get_constituencies.png)
 
 ## Get representatives
 
-![Get states response](response_get_reps.png)
+![Get states response](imgs/response_get_reps.png)
 
 ## Get representative by ID
 
-![Get states response](response_get_rep_by_id.png)
+![Get states response](imgs/response_get_rep_by_id.png)
 
 ## Get total number of representatives from each state
 
-![Get states response](response_get_counts.png)
+![Get states response](imgs/response_get_counts.png)
 
 # Contribution
 
